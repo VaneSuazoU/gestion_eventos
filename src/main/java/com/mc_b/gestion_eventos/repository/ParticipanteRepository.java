@@ -1,9 +1,9 @@
 package com.mc_b.gestion_eventos.repository;
 
-import com.mc_b.gestion_eventos.model.Event;
+import com.mc_b.gestion_eventos.model.Participante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface ParticipanteRepository extends JpaRepository<Participante, Long> {
 }

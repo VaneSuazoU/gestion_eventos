@@ -42,22 +42,71 @@ GET /api/eventos/{id}
 
 ---
 
+### Crear nuevo evento
+```http
+POST /api/eventos
+```
+Body:
+```json
+{
+  "nombre": "Desfile de Moda Pet",
+  "tipo": "evento social",
+  "fecha": "2025-08-05",
+  "ubicacion": "Plaza del Sol"
+}
+```
+
+---
+
 ### Inscribir participante
 ```http
-GET /api/eventos/inscribir?eventoId={id}&nombre={nombre}&tipo={tipo}
+POST /api/eventos/{id}/inscribir
 ```
-**Ejemplo:**  
-[http://localhost:8080/api/eventos/inscribir?eventoId=1&nombre=Firulais&tipo=mascota](http://localhost:8080/api/eventos/inscribir?eventoId=1&nombre=Firulais&tipo=mascota)
+Body:
+```json
+{
+  "nombre": "Firulais",
+  "tipo": "mascota"
+}
+```
+
+---
+
+### Obtener participantes por evento
+```http
+GET /api/eventos/{id}/participantes
+```
+
+---
+
+### Actualizar participante
+```http
+PUT /api/participantes/{id}
+```
+Body:
+```json
+{
+  "nombre": "Nuevo Nombre",
+  "tipo": "persona"
+}
+```
+
+---
+
+### Eliminar participante
+```http
+DELETE /api/participantes/{id}
+```
 
 ---
 
 ## 🎟️ Eventos precargados
 
-| ID | Nombre               | Tipo        | Fecha        | Ubicación         |
-|----|----------------------|-------------|--------------|-------------------|
-| 1  | Feria Pet Lovers     | feria       | 2025-04-10   | Parque Central    |
-| 2  | Carrera de Mascotas  | competencia | 2025-04-20   | Estadio Comunal   |
-| 3  | Desfile de Disfraces | evento social | 2025-04-30 | Plaza Principal   |
+| ID | Nombre               | Tipo          | Fecha        | Ubicación         |
+|----|----------------------|---------------|--------------|-------------------|
+| 1  | Feria de Mascotas    | feria         | 2025-06-01   | Plaza Central     |
+| 2  | Concurso de Agilidad | competencia   | 2025-06-15   | Parque Deportivo  |
+| 3  | Desfile Canino       | evento social | 2025-06-25   | Plaza Norte       |
 
 ---
 
@@ -71,13 +120,15 @@ com.mc_b.gestion_eventos
 │   └── Participante.java
 │
 ├── repository
-│   └── EventRepository.java
+│   ├── EventRepository.java
+│   └── ParticipanteRepository.java
 │
 ├── service
 │   └── EventService.java
 │
 ├── controller
-│   └── EventController.java
+│   ├── EventController.java
+│   └── ParticipanteController.java
 │
 └── GestionEventosApplication.java
 ```
@@ -87,5 +138,3 @@ com.mc_b.gestion_eventos
 ## 🧪 Pruebas
 
 Puedes usar navegador o Postman para probar los endpoints.
-
----

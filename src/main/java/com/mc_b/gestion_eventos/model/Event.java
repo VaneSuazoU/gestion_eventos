@@ -1,28 +1,42 @@
 package com.mc_b.gestion_eventos.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "eventos")
 public class Event {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nombre;
-    private String tipo;      // feria, competencia, etc.
+
+    @Column(nullable = false)
+    private String tipo;
+
+    @Column(nullable = false)
     private String fecha;
+
+    @Column(nullable = false)
     private String ubicacion;
+    
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Participante> participantes;
-
-    public Event() {
-        this.participantes = new ArrayList<>();
-    }
-
-    public Event(Long id, String nombre, String tipo, String fecha, String ubicacion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.fecha = fecha;
-        this.ubicacion = ubicacion;
-        this.participantes = new ArrayList<>();
-    }
 
     public Long getId() {
         return id;
@@ -70,9 +84,5 @@ public class Event {
 
     public void setParticipantes(List<Participante> participantes) {
         this.participantes = participantes;
-    }
-
-    public void agregarParticipante(Participante participante) {
-        this.participantes.add(participante);
     }
 }
