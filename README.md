@@ -1,3 +1,4 @@
+
 # Microservicio: Gestión de Eventos de Mascotas
 
 Este microservicio permite gestionar eventos relacionados con mascotas como ferias, competencias, desfiles, etc. Puedes listar eventos, ver detalles y registrar participantes.
@@ -5,27 +6,34 @@ Este microservicio permite gestionar eventos relacionados con mascotas como feri
 Primera sumativa Desarrollo FullStack
 
 ## 🧱 Tecnologías
-- Java 24
-- Spring Boot 3.4.4
-- Maven
+
+- Java 24  
+- Spring Boot 3.4.4  
+- Maven  
+- HATEOAS  
+- JUnit 5 + Mockito (para pruebas unitarias)
+
+---
 
 ## 🚀 Cómo ejecutar
 
 Desde la raíz del proyecto, ejecuta:
 
-```bash
+```
 ./mvnw spring-boot:run
 ```
 
 > En Windows:  
-```bash
+```
 mvnw.cmd spring-boot:run
 ```
 
+---
+
 ## 🌐 Endpoints disponibles
 
-### Obtener todos los eventos
-```http
+### Obtener todos los eventos (con HATEOAS)
+```
 GET /api/eventos
 ```
 **Ejemplo:**  
@@ -33,8 +41,8 @@ GET /api/eventos
 
 ---
 
-### Obtener evento por ID
-```http
+### Obtener evento por ID (con HATEOAS)
+```
 GET /api/eventos/{id}
 ```
 **Ejemplo:**  
@@ -43,7 +51,7 @@ GET /api/eventos/{id}
 ---
 
 ### Crear nuevo evento
-```http
+```
 POST /api/eventos
 ```
 Body:
@@ -59,7 +67,7 @@ Body:
 ---
 
 ### Inscribir participante
-```http
+```
 POST /api/eventos/{id}/inscribir
 ```
 Body:
@@ -73,14 +81,14 @@ Body:
 ---
 
 ### Obtener participantes por evento
-```http
+```
 GET /api/eventos/{id}/participantes
 ```
 
 ---
 
 ### Actualizar participante
-```http
+```
 PUT /api/participantes/{id}
 ```
 Body:
@@ -94,7 +102,7 @@ Body:
 ---
 
 ### Eliminar participante
-```http
+```
 DELETE /api/participantes/{id}
 ```
 
@@ -115,6 +123,12 @@ DELETE /api/participantes/{id}
 ```
 com.mc_b.gestion_eventos
 │
+├── assembler
+│   └── EventModelAssembler.java
+│
+├── controller
+│   └── EventController.java
+│
 ├── model
 │   ├── Event.java
 │   └── Participante.java
@@ -126,15 +140,38 @@ com.mc_b.gestion_eventos
 ├── service
 │   └── EventService.java
 │
-├── controller
-│   ├── EventController.java
-│   └── ParticipanteController.java
-│
-└── GestionEventosApplication.java
+├── GestionEventosApplication.java
+└── resources
+    └── application.properties
 ```
+
+---
+
+## 📎 HATEOAS
+
+Los endpoints `GET /api/eventos` y `GET /api/eventos/{id}` entregan respuestas enriquecidas con enlaces HATEOAS utilizando `EventModelAssembler`, facilitando la navegación entre recursos.
 
 ---
 
 ## 🧪 Pruebas
 
-Puedes usar navegador o Postman para probar los endpoints.
+Se implementaron pruebas unitarias con **JUnit 5** y **Mockito** para verificar el comportamiento de `EventService`.
+
+📁 Archivo principal:
+```
+src/test/java/com/mc_b/gestion_eventos/service/EventServiceTest.java
+```
+
+Para ejecutar las pruebas:
+```
+mvn test
+```
+
+---
+
+## ✨ Estado actual
+
+✔ Funcionalidad principal implementada  
+✔ Endpoints REST y HATEOAS operativos  
+✔ Pruebas unitarias del servicio  
+✔ Documentación actualizada

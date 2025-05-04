@@ -13,10 +13,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import org.springframework.hateoas.RepresentationModel;
+
 
 @Entity
 @Table(name = "eventos")
-public class Event {
+public class Event extends RepresentationModel<Event> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

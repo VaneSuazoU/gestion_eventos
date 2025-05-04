@@ -3,7 +3,6 @@ package com.mc_b.gestion_eventos.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mc_b.gestion_eventos.model.Event;
@@ -14,11 +13,14 @@ import com.mc_b.gestion_eventos.repository.ParticipanteRepository;
 @Service
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+    private final ParticipanteRepository participanteRepository;
 
-    @Autowired
-    private ParticipanteRepository participanteRepository;
+    // Constructor necesario para pruebas unitarias
+    public EventService(EventRepository eventRepository, ParticipanteRepository participanteRepository) {
+        this.eventRepository = eventRepository;
+        this.participanteRepository = participanteRepository;
+    }
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
@@ -65,11 +67,12 @@ public class EventService {
         participanteRepository.save(participante);
         return true;
     }
+
     public List<Participante> getParticipantesPorEvento(Long eventoId) {
         Optional<Event> evento = eventRepository.findById(eventoId);
         return evento.map(Event::getParticipantes).orElseGet(List::of);
     }
-    
+
     public Participante actualizarParticipante(Long id, Participante participanteActualizado) {
         return participanteRepository.findById(id).map(p -> {
             p.setNombre(participanteActualizado.getNombre());
@@ -77,7 +80,7 @@ public class EventService {
             return participanteRepository.save(p);
         }).orElse(null);
     }
-    
+
     public boolean eliminarParticipante(Long id) {
         if (participanteRepository.existsById(id)) {
             participanteRepository.deleteById(id);
@@ -85,6 +88,4 @@ public class EventService {
         }
         return false;
     }
-   
-    
 }
