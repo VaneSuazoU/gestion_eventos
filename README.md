@@ -1,60 +1,61 @@
 
-# Microservicio: Gestión de Eventos de Mascotas
+# Microservicio: Gestión de Eventos
 
-Este microservicio permite gestionar eventos relacionados con mascotas como ferias, competencias, desfiles, etc. Puedes listar eventos, ver detalles y registrar participantes.
+Este microservicio forma parte de una aplicación de viajes con mascotas. Permite registrar eventos pet-friendly como ferias, competencias, desfiles, e inscribir participantes (mascotas o personas).
 
 Primera sumativa Desarrollo FullStack
 
 ## 🧱 Tecnologías
-
-- Java 24  
-- Spring Boot 3.4.4  
-- Maven  
-- HATEOAS  
-- JUnit 5 + Mockito (para pruebas unitarias)
-
----
+- Java 24
+- Spring Boot 3.4.4
+- Maven
+- HATEOAS
+- JUnit 5 + Mockito
 
 ## 🚀 Cómo ejecutar
 
 Desde la raíz del proyecto, ejecuta:
 
-```
+```bash
 ./mvnw spring-boot:run
 ```
 
 > En Windows:  
-```
+```bash
 mvnw.cmd spring-boot:run
 ```
 
 ---
 
+## 🐳 Docker y despliegue remoto
+
+Este microservicio puede ejecutarse también directamente desde DockerHub:
+
+```bash
+docker run -p 8080:8080 vanesuazou/gestion_eventos
+```
+
+👉 Imagen publicada: [https://hub.docker.com/r/vanesuazou/gestion_eventos](https://hub.docker.com/r/vanesuazou/gestion_eventos)
+
+---
+
 ## 🌐 Endpoints disponibles
 
-### Obtener todos los eventos (con HATEOAS)
-```
+### Obtener todos los eventos
+```http
 GET /api/eventos
 ```
-**Ejemplo:**  
-[http://localhost:8080/api/eventos](http://localhost:8080/api/eventos)
 
----
-
-### Obtener evento por ID (con HATEOAS)
-```
+### Obtener evento por ID
+```http
 GET /api/eventos/{id}
 ```
-**Ejemplo:**  
-[http://localhost:8080/api/eventos/1](http://localhost:8080/api/eventos/1)
-
----
 
 ### Crear nuevo evento
-```
+```http
 POST /api/eventos
+Content-Type: application/json
 ```
-Body:
 ```json
 {
   "nombre": "Desfile de Moda Pet",
@@ -64,13 +65,11 @@ Body:
 }
 ```
 
----
-
 ### Inscribir participante
-```
+```http
 POST /api/eventos/{id}/inscribir
+Content-Type: application/json
 ```
-Body:
 ```json
 {
   "nombre": "Firulais",
@@ -78,20 +77,16 @@ Body:
 }
 ```
 
----
-
 ### Obtener participantes por evento
-```
+```http
 GET /api/eventos/{id}/participantes
 ```
 
----
-
 ### Actualizar participante
-```
+```http
 PUT /api/participantes/{id}
+Content-Type: application/json
 ```
-Body:
 ```json
 {
   "nombre": "Nuevo Nombre",
@@ -99,16 +94,14 @@ Body:
 }
 ```
 
----
-
 ### Eliminar participante
-```
+```http
 DELETE /api/participantes/{id}
 ```
 
 ---
 
-## 🎟️ Eventos precargados
+## 🐾 Eventos precargados
 
 | ID | Nombre               | Tipo          | Fecha        | Ubicación         |
 |----|----------------------|---------------|--------------|-------------------|
@@ -123,55 +116,27 @@ DELETE /api/participantes/{id}
 ```
 com.mc_b.gestion_eventos
 │
-├── assembler
-│   └── EventModelAssembler.java
-│
-├── controller
-│   └── EventController.java
-│
 ├── model
 │   ├── Event.java
 │   └── Participante.java
-│
 ├── repository
 │   ├── EventRepository.java
 │   └── ParticipanteRepository.java
-│
 ├── service
 │   └── EventService.java
-│
-├── GestionEventosApplication.java
-└── resources
-    └── application.properties
+├── controller
+│   └── EventController.java
+└── GestionEventosApplication.java
 ```
-
----
-
-## 📎 HATEOAS
-
-Los endpoints `GET /api/eventos` y `GET /api/eventos/{id}` entregan respuestas enriquecidas con enlaces HATEOAS utilizando `EventModelAssembler`, facilitando la navegación entre recursos.
 
 ---
 
 ## 🧪 Pruebas
 
-Se implementaron pruebas unitarias con **JUnit 5** y **Mockito** para verificar el comportamiento de `EventService`.
+Puedes usar navegador o Postman para probar los endpoints.
 
-📁 Archivo principal:
+Incluye pruebas unitarias con JUnit 5 + Mockito en:
+
 ```
 src/test/java/com/mc_b/gestion_eventos/service/EventServiceTest.java
 ```
-
-Para ejecutar las pruebas:
-```
-mvn test
-```
-
----
-
-## ✨ Estado actual
-
-✔ Funcionalidad principal implementada  
-✔ Endpoints REST y HATEOAS operativos  
-✔ Pruebas unitarias del servicio  
-✔ Documentación actualizada
